@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+import sys
+import re
+import os
+
+# get cmd line arguments
+directory = sys.argv[1]
+pattern = sys.argv[2]
+expr = re.compile(pattern)
+
+# convert in regexp
+
+# traverse the directories
+for root, d, files in os.walk(directory):
+  # print "root {} dirs {} files {}".format(r,d,files)
+  for file in files:
+    if expr.search(file):
+      print os.path.join(root, file)
