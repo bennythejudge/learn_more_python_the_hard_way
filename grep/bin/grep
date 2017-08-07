@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+from grep import utils
+import sys
+
+top_directory = sys.argv[1]
+
+patterns = utils.convert_patterns(sys.argv[2:])
+
+files = utils.traverse_directories(top_directory)
+
+#print files
+
+utils.apply_patterns(files, patterns)
