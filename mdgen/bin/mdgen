@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import markdown
+import sys
+from mdgen import utils
+import re
+
+# get an expression for .*.md"
+
+expr = re.compile('.*.md')
+
+# get the source directory from args
+
+top_directory = sys.argv[1]
+
+# get the target directory
+
+target_dir = sys.argv[2]
+
+# traverse and build a file list
+
+files = utils.traverse_directories(top_directory)
+
+# for each file with extension .md transform it in html
+# and write it out to the target directory with extension .html
+for file in files:
+  print "evaluating {}".format(file)
+  if expr.match(file):
+    print "matched {}".format(file)
