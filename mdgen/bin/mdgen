@@ -1,13 +1,6 @@
 #!/usr/bin/env python
-
-import markdown
 import sys
 from mdgen import utils
-import re
-import os
-
-# get an expression for .*.md"
-expr = re.compile('.*.md$')
 
 # get the source directory from args
 source = sys.argv[1]
@@ -19,33 +12,13 @@ target = sys.argv[2]
 files = utils.traverse_directories(source)
 #print files
 
+targets = utils.discover_md_files(source, target, files)
+#print targets
+
+for source, target in targets:
+    print source, target
+    utils.convert_md_to_html(source, target)
 # for each file with extension .md transform it in html
 # and write it out to the target directory with extension .html
-for file in files:
-    print file
-    filename = os.path.basename(file)
-    if expr.match(filename):
-        print file
-        print "filename {}".format(filename)
-        # extract the directoy below the top level (which is = source)
-        directory = os.path.split(file)[0][len('docs')+1:]
-        print "directory: {}".format(directory)
-        target_dir = os.path.join(target, directory)
-        print "target_dir {}".format(target_dir)
-        if not os.path.exists(target_dir):
-            print "making dir {}".format(target_dir)
-            os.makedirs(target_dir)
-        # make filename
-        base, ext = os.path.splitext(filename)
-        print base, ext
-        target_file = os.path.join(target_dir, base + '.html')
-        print "target_file {}".format(target_file)
-        print "file: {}".format(file)
-        lines = open(file).read()
-        print "lines: {}\n".format(lines)
-        html = markdown.markdown(lines)
-        print "html: {}\n".format(html)
-        print "writing to {}".format(target_file)
-        with open(target_file, 'w') as f:
-            f.write(html)
-        print "------"
+# print "target_file {}".format(target_file)
+# print "file: {}".format(file)
