@@ -22,25 +22,30 @@ files = utils.traverse_directories(source)
 # for each file with extension .md transform it in html
 # and write it out to the target directory with extension .html
 for file in files:
- #   print "file: {}".format(file)
+    print file
     filename = os.path.basename(file)
     if expr.match(filename):
+        print file
         print "filename {}".format(filename)
         # extract the directoy below the top level (which is = source)
         directory = os.path.split(file)[0][len('docs')+1:]
+        print "directory: {}".format(directory)
         target_dir = os.path.join(target, directory)
         print "target_dir {}".format(target_dir)
         if not os.path.exists(target_dir):
             print "making dir {}".format(target_dir)
             os.makedirs(target_dir)
-            # make filename
-            base, ext = os.path.splitext(filename)
-            print base, ext
-            target_file = os.path.join(target_dir, base + '.html')
-            print "target_file {}".format(target_file)
-            lines = open(file).read()
-            html = markdown.markdown(lines)
-            print "writing to {}".format(target_file)
-            with open(target_file, 'w') as f:
-                f.write(html)
-            print "------"
+        # make filename
+        base, ext = os.path.splitext(filename)
+        print base, ext
+        target_file = os.path.join(target_dir, base + '.html')
+        print "target_file {}".format(target_file)
+        print "file: {}".format(file)
+        lines = open(file).read()
+        print "lines: {}\n".format(lines)
+        html = markdown.markdown(lines)
+        print "html: {}\n".format(html)
+        print "writing to {}".format(target_file)
+        with open(target_file, 'w') as f:
+            f.write(html)
+        print "------"
