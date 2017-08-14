@@ -12,9 +12,12 @@ class EchoHandler(asyncore.dispatcher_with_send):
         if data:
             for pair in CLIENTS:
               sock, addr = pair
+              msg = addr[0] + " " + data
               print "sock: {}  addr: {}".format(sock, addr)
+              print "data: {} type: {}".format(data, type(data))
+              print "addr: {}  type: {}".format(addr, type(addr))
               try:
-                sock.send(data)
+                sock.send(msg)
               except:
                 print "bad socket {}".format(sock)
                 CLIENTS.remove(pair)
@@ -31,6 +34,7 @@ class EchoServer(asyncore.dispatcher):
     def handle_accept(self):
         pair = self.accept()
         if pair is not None:
+            print "pair {}".format(pair)
             CLIENTS.append(pair)
             sock, addr = pair
             print 'Incoming connection from %s' % repr(addr)
