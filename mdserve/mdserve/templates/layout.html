@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>My blog</title>
+  </head>
+<body>
+
+<h1>Welcome to my blog</h1>
+  <table>
+    <tr>
+      <td>
+        {{ body | safe }}
+      </td>
+    </tr>
+  </table>
+  <p color="red">A PARAGRAPH!</p>
+
+  <a href="edit/{{ doc }}.html">Edit this document</a>
+</body>
+</html>
